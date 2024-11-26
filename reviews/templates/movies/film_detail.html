@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <!-- Affiche du film en haut, avec une taille plus grande -->
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <img src="{{ film.poster.url }}" alt="Affiche de {{ film.title }}" class="img-fluid rounded shadow-lg" style="max-height: 500px; object-fit: cover; width: 100%;">
+      </div>
+    </div>
+
+    <!-- Détails du film sous l'image -->
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h1 class="text-center mb-4">{{ film.title }}</h1>
+
+        <p><strong>Synopsis:</strong> {{ film.synopsis }}</p>
+        <p><strong>Genre:</strong> {{ film.genre }}</p>
+        <p><strong>Date de sortie:</strong> {{ film.release_date|date:"Y-m-d"}}</p>
+        <p><strong>Durée:</strong> {{ film.duration }} minutes</p>
+        <p><strong>Casting:</strong> {{ film.casting }}</p>
+        <p><strong>Note moyenne:</strong> {{ film.average_rating }}/5</p>
+
+        <h2>Critiques</h2>
+
+        {% if has_reviewed %}
+          <p>Vous avez déjà rédigé une critique pour ce film.</p>
+        {% else %}
+          <a href="{% url 'add_critique' film.id %}" class="btn btn-primary btn-lg mb-4">Ajouter une critique</a>
+        {% endif %}
+        
+        <!-- Liste des critiques avec un design amélioré -->
+        <div class="reviews">
+          {% for critique in critiques %}
+            <div class="review-item mb-4 p-4 border rounded shadow-sm">
+              <div class="review-header mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="review-title">
+                    <strong>Titre:</strong> {{ critique.title }}
+                  </h5>
+                  <p class="review-rating mb-0">
+                    <strong>Note:</strong> {{ critique.rating }}/5
+                  </p>
+                </div>
+                <strong>Posté par</strong>{{ critique.user.email }}<strong> le</strong> {{ critique.published_date|date:"Y-m-d H:i" }}</p>
+              </div>
+              <p class="review-content">{{ critique.content}}</p>
+              {% if critique.user == request.user %}
+              <div>
+                <a href="{% url 'edit_critique' pk=critique.pk %}" class="btn btn-warning btn-sm me-2">Modifier</a>
+                <a href="{% url 'delete_critique' pk=critique.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+              </div>
+            {% endif %}
+            <a href="{% url 'critique_detail' critique.id %}">VoirPlus...</a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

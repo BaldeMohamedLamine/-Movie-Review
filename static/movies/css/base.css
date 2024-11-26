@@ -1,0 +1,53 @@
+/* styles.css */
+
+/* Corps de page */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Pour le contenu principal */
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Navigation */
+.nav-link {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Pied de page */
+footer p {
+    margin-bottom: 0;
+}
+
+/* Formulaires */
+form input, form select, form textarea {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+form button:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Supprimer le Commentaire</h1>
+    <p class="lead">Êtes-vous sûr de vouloir supprimer votre commentaire ? Cette action est irréversible.</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+        <a href="{% url 'critique_detail' object.critique.id %}" class="btn btn-secondary">Annuler</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
