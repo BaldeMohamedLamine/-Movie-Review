@@ -1,9 +1,10 @@
+from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from .managers import UserManager
-from django.conf import settings
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)

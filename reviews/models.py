@@ -1,5 +1,7 @@
 from django.db import models
+
 from users.models import User
+
 
 class Film(models.Model):
     title = models.CharField(max_length=255)
@@ -23,9 +25,10 @@ class Film(models.Model):
         else:
             self.average_rating = 0
         self.save()
-        
+
     def __str__(self):
         return self.title
+
 
 class Critique(models.Model):
     film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='reviews')
@@ -42,6 +45,7 @@ class Critique(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.user.username}"
+
 
 class Commentaire(models.Model):
     critique = models.ForeignKey(Critique, on_delete=models.CASCADE, related_name='commentaires')

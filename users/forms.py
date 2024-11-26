@@ -1,14 +1,12 @@
 from django import forms
-from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 
+from .models import Profile
 from .models import User
 from .utils.send_emails import send_activation_email
-
-from .models import Profile
 
 
 class CustomAuthenticationForm(AuthenticationForm):

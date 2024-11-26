@@ -1,11 +1,24 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from .models import Film, Critique, Commentaire
-from .forms import CritiqueForm, FilmSearchForm, CommentaireForm
 from datetime import datetime
+
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
+
+from .forms import CommentaireForm
+from .forms import CritiqueForm
+from .forms import FilmSearchForm
+from .models import Commentaire
+from .models import Critique
+from .models import Film
+
+
 # Liste des films avec filtres
 class FilmListView(ListView):
     model = Film
@@ -40,6 +53,7 @@ class FilmListView(ListView):
         context['form'] = FilmSearchForm(self.request.GET)
         return context
 
+
 # Page détaillée d'un film avec critiques
 class FilmDetailView(DetailView):
     model = Film
@@ -52,6 +66,7 @@ class FilmDetailView(DetailView):
         context['critiques'] = film.reviews.all()  # Critiques du film
         context['has_reviewed'] = film.reviews.filter(user=self.request.user).exists()
         return context
+
 
 # Ajouter une critique
 class CritiqueCreateView(LoginRequiredMixin, CreateView):
@@ -75,6 +90,7 @@ class CritiqueCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('film_detail', kwargs={'pk': self.object.film.id})
 
+
 # Modifier une critique
 class CritiqueUpdateView(LoginRequiredMixin, UpdateView):
     model = Critique
@@ -87,6 +103,7 @@ class CritiqueUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('film_detail', kwargs={'pk': self.object.film.id})
 
+
 # Supprimer une critique
 class CritiqueDeleteView(LoginRequiredMixin, DeleteView):
     model = Critique
@@ -98,6 +115,7 @@ class CritiqueDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('film_detail', kwargs={'pk': self.object.film.id})
 
+
 # Détails d'une critique avec commentaires
 class CritiqueDetailView(DetailView):
     model = Critique
@@ -108,6 +126,7 @@ class CritiqueDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['commentaires'] = Commentaire.objects.filter(critique=self.object)
         return context
+
 
 # Ajouter un commentaire
 class CommentaireCreateView(LoginRequiredMixin, CreateView):
@@ -122,7 +141,8 @@ class CommentaireCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('critique_detail', kwargs={'pk': self.object.critique.id})
-    
+
+
 class CommentUpdateView(LoginRequiredMixin, UpdateView):
     model = Commentaire
     form_class = CommentaireForm
@@ -135,7 +155,8 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         # Rediriger vers la page de détails de la critique après modification du commentaire
         return reverse_lazy('critique_detail', kwargs={'pk': self.object.critique.id})
-    
+
+
 # Supprimer un commentaire (pour admin/modération)
 class CommentaireDeleteView(LoginRequiredMixin, DeleteView):
     model = Commentaire

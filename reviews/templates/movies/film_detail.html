@@ -28,7 +28,7 @@
         {% else %}
           <a href="{% url 'add_critique' film.id %}" class="btn btn-primary btn-lg mb-4">Ajouter une critique</a>
         {% endif %}
-        
+
         <!-- Liste des critiques avec un design amélioré -->
         <div class="reviews">
           {% for critique in critiques %}

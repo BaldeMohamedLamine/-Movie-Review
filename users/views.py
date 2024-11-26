@@ -1,23 +1,25 @@
-from django.contrib.auth.views import LoginView
-from django.views.generic.edit import CreateView, View
-from django.views.generic import ListView
-from django.urls import reverse_lazy
-from django.shortcuts import redirect, render
-from django.utils.http import urlsafe_base64_decode
+from django.conf import settings
 from django.contrib import messages
-from django.db import transaction
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import logout
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import LoginView
+from django.db import transaction
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.http import urlsafe_base64_decode
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import View
 
 from .forms import CustomAuthenticationForm
 from .forms import CustomUserCreationForm
-from users.models import User
-from .utils.send_emails import send_activation_email
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from .models import Profile
-from django.conf import settings
 from .forms import ProfileForm
+from .models import Profile
+from .utils.send_emails import send_activation_email
+from users.models import User
 
 
 class CustomLoginView(LoginView):
@@ -79,7 +81,7 @@ class LogoutView(View):
         )
         return redirect(self.login_url)
 
-#por creer atomatiqmet le profil 
+#por creer atomatiqmet le profil
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -91,12 +93,12 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 def profile_view(request):
-    profile = request.user.profile  
+    profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile') 
+            return redirect('profile')
     else:
-        form = ProfileForm(instance=profile)  
+        form = ProfileForm(instance=profile)
     return render(request, 'registration/profile.html', {'form': form})
