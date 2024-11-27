@@ -2,11 +2,6 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Ajouter les dépendances système
-RUN apt-get update && apt-get install -y \
-    libpq-dev gcc --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Copier les fichiers nécessaires
 COPY requirements.txt .
 
