@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
@@ -169,3 +170,11 @@ class CommentaireDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('critique_detail', kwargs={'pk': self.object.critique.id})
+
+
+def custom_404_view(request, exception=None):
+    return render(request, 'moviews/404.html', status=404)
+
+
+def custom_500_view(request, exception=None):
+    return render(request, 'moviews/500.html', status=500)
