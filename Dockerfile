@@ -10,7 +10,9 @@ WORKDIR /app
 COPY  requirements.txt .
 
 # Mettre à jour pip et installer les dépendances
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip
+
+RUN pip install -r requirements.txt
 
 # Copier le reste du projet
 COPY . .
