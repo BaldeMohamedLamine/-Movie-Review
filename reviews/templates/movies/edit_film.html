@@ -2,11 +2,11 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Ajouter un Commentaire</h1>
-    <form method="post">
+    <h2>Modifier le Film</h2>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary mt-3">Publier</button>
+        <button type="submit" class="btn btn-primary mt-3">Modifier</button>
     </form>
 </div>
 {% endblock %}

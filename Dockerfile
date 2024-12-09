@@ -1,4 +1,4 @@
-FROM python:3.12-bookworm
+FROM python:3.12-bullseye
 
 # Ne pas écrire de fichiers .pyc
 ENV PYTHONDONTWRITEBYTECODE =1

@@ -5,7 +5,7 @@ services:
       - 5459:5432
     environment:
       - POSTGRES_USER=movie
-      - POSTGRES_PASSWORD=movie
+      - POSTGRES_PASSWORD=mWX9ujk7557FSn
     volumes:
       - pg_data_movie:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d

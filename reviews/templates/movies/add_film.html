@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Ajouter un Film{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Ajouter un Film</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Titre</label>
+            {{ form.title(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="synopsis">Synopsis</label>
+            {{ form.synopsis(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            {{ form.genre(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="release_date">Date de Sortie</label>
+            {{ form.release_date(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="casting">Casting</label>
+            {{ form.casting(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="duration">Durée (minutes)</label>
+            {{ form.duration(class="form-control") }}
+        </div>
+        <div class="form-group">
+            <label for="poster">Affiche</label>
+            {{ form.poster(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-plus"></i> Ajouter
+        </button>
+    </form>
+</div>
+{% endblock %}

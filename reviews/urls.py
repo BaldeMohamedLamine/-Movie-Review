@@ -9,6 +9,9 @@ from reviews.views import CritiqueCreateView
 from reviews.views import CritiqueDeleteView
 from reviews.views import CritiqueDetailView
 from reviews.views import CritiqueUpdateView
+from reviews.views import FilmCreateView
+from reviews.views import FilmDeleteView
+from reviews.views import FilmUpdateView
 from reviews.views import FilmDetailView
 from reviews.views import FilmListView
 from reviews.views_api import CritiqueViewSet
@@ -22,10 +25,13 @@ router.register(r'critiques', CritiqueViewSet)
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('films/', FilmListView.as_view(), name='film_list'),
+    path('', FilmListView.as_view(), name='film_list'),
     path('films/<int:pk>/', FilmDetailView.as_view(), name='film_detail'),
+    path("films/create/", FilmCreateView.as_view(), name="create_film"),
+    path("films/<int:pk>/update/", FilmUpdateView.as_view(), name="update_film"),
+    path("films/<int:pk>/delete/", FilmDeleteView.as_view(), name="delete_film"),
 
-    path('films/<int:pk>/add-critique/', CritiqueCreateView.as_view(), name='add_critique'),
+    path('films/<int:film_id>/add-critique/', CritiqueCreateView.as_view(), name='add_critique'),
     path('critiques/<int:pk>/', CritiqueDetailView.as_view(), name='critique_detail'),
     path('critiques/<int:pk>/edit/', CritiqueUpdateView.as_view(), name='edit_critique'),
     path('critiques/<int:pk>/delete/', CritiqueDeleteView.as_view(), name='delete_critique'),

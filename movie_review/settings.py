@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'users',
     'reviews',
 
+    'crispy_forms',
+
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,17 +82,25 @@ WSGI_APPLICATION = 'movie_review.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':'movie_dev',
+#         'USER': 'movie',
+#         'PASSWORD':'movie',
+#         'HOST': '127.0.0.1',
+#         'PORT': 5459
+#     }
+# }
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'movie_dev',
-        'USER': 'movie',
-        'PASSWORD':'movie',
-        'HOST': '127.0.0.1',
-        'PORT': 5459
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -148,7 +159,7 @@ EMAIL_HOST_PASSWORD = 'sxju yyxj kfmi fjex'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 # Other configurations
-DOMAIN_URL = 'localhost:8000'
+DOMAIN_URL = 'localhost:8001'
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 AUTHENTICATION_BACKENDS = [

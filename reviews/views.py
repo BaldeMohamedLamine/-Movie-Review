@@ -15,6 +15,7 @@ from django.views.generic import UpdateView
 from .forms import CommentaireForm
 from .forms import CritiqueForm
 from .forms import FilmSearchForm
+from .forms import FilmForm
 from .models import Commentaire
 from .models import Critique
 from .models import Film
@@ -54,6 +55,18 @@ class FilmListView(ListView):
         context['form'] = FilmSearchForm(self.request.GET)
         return context
 
+class FilmCreateView(LoginRequiredMixin, CreateView):
+    model = Film
+    form_class = FilmForm
+    template_name = 'movies/add_film.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, "Film ajouté avec succès.")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('film_list')
+
 
 # Page détaillée d'un film avec critiques
 class FilmDetailView(DetailView):
@@ -64,10 +77,25 @@ class FilmDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         film = self.object
-        context['critiques'] = film.reviews.all()  # Critiques du film
+        context['critiques'] = film.reviews.all()
         context['has_reviewed'] = film.reviews.filter(user=self.request.user).exists()
         return context
+class FilmUpdateView(LoginRequiredMixin, UpdateView):
+    model = Film
+    form_class = FilmForm
+    template_name = 'movies/edit_film.html'
 
+    def get_success_url(self):
+        messages.success(self.request, "Film modifié avec succès.")
+        return reverse_lazy('film_detail', kwargs={'pk': self.object.pk})
+
+class FilmDeleteView(LoginRequiredMixin, DeleteView):
+    model = Film
+    template_name = 'movies/delete_film.html'
+
+    def get_success_url(self):
+        messages.success(self.request, "Film supprimé avec succès.")
+        return reverse_lazy('film_list')
 
 # Ajouter une critique
 class CritiqueCreateView(LoginRequiredMixin, CreateView):
@@ -150,11 +178,9 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'movies/edit_comment.html'
 
     def get_queryset(self):
-        # S'assurer que l'utilisateur ne puisse modifier que ses propres commentaires
         return Commentaire.objects.filter(user=self.request.user)
 
     def get_success_url(self):
-        # Rediriger vers la page de détails de la critique après modification du commentaire
         return reverse_lazy('critique_detail', kwargs={'pk': self.object.critique.id})
 
 

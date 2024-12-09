@@ -11,7 +11,6 @@ def test_film_list_view(client, films_data):
     "Teste l'API de la vue FilmListView pour s'assurer qu'elle renvoie une liste paginée de films."
 
     url = reverse('film_list')
-    print(url)
     response = client.get(url)
 
     assert response.status_code == 200
