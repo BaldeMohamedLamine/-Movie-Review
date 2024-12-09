@@ -64,7 +64,7 @@ class FilmDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         film = self.object
-        context['critiques'] = film.reviews.all()  # Critiques du film
+        context['critiques'] = film.reviews.all()
         context['has_reviewed'] = film.reviews.filter(user=self.request.user).exists()
         return context
 
